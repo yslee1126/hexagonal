@@ -1,8 +1,16 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.9.25'
+
+    // service, transactional 등 CGLib 사용하여 프록시 생성하는 Bean 을 위한 open 설정
     id 'org.jetbrains.kotlin.plugin.spring' version '1.9.25'
     id 'org.springframework.boot' version '3.4.0'
     id 'io.spring.dependency-management' version '1.1.6'
+
+    // 기본 생성자 생성
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.25'
+
+    // querydsl
+    id 'org.jetbrains.kotlin.kapt' version '1.9.25'
 }
 
 group = 'groot'
@@ -24,6 +32,19 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // querydsl
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    implementation 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    implementation 'com.querydsl:querydsl-sql:5.0.0'
+    implementation 'jakarta.persistence:jakarta.persistence-api'
+    implementation 'jakarta.annotation:jakarta.annotation-api'
+    kapt 'com.querydsl:querydsl-apt:5.0.0:jakarta'
+    kapt 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
 kotlin {
@@ -34,4 +55,11 @@ kotlin {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// kotlin class 는 기본 final 이기 때문에 상속, 지연로딩 등 스프링에서 필요한 기능이 제한되어 open 필요
+allOpen {
+    annotation("jakarta.persistence.Entity")
+    annotation("jakarta.persistence.Embeddable")
+    annotation("jakarta.persistence.MappedSuperclass")
 }
