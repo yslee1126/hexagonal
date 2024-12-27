@@ -9,7 +9,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
 class MemberServiceTest: BehaviorSpec ({
 
     val memberQueryPort = mockk<MemberQueryPort>()
