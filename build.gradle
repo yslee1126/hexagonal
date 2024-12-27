@@ -45,6 +45,11 @@ dependencies {
     implementation 'jakarta.annotation:jakarta.annotation-api'
     kapt 'com.querydsl:querydsl-apt:5.0.0:jakarta'
     kapt 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // kotest
+    testImplementation 'io.kotest:kotest-runner-junit5:5.9.1'
+    testImplementation 'io.kotest:kotest-assertions-core:5.9.1'
+    testImplementation 'io.mockk:mockk:1.13.14'
 }
 
 kotlin {
