@@ -1,4 +1,4 @@
-package groot.hexagonal.adapter.out.persistence
+package groot.hexagonal.adapter.output.persistence
 
 import jakarta.persistence.*
 

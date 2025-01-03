@@ -1,4 +1,4 @@
-package groot.hexagonal.application.port.out
+package groot.hexagonal.application.port.output
 
 import groot.hexagonal.domain.Member
 

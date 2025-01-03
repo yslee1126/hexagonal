@@ -1,6 +1,6 @@
-package groot.hexagonal.adapter.out.persistence
+package groot.hexagonal.adapter.output.persistence
 
-import groot.hexagonal.application.port.out.MemberQueryPort
+import groot.hexagonal.application.port.output.MemberQueryPort
 import groot.hexagonal.domain.Member
 import org.springframework.stereotype.Component
 

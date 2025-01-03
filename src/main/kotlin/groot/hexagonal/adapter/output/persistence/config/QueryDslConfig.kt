@@ -1,4 +1,4 @@
-package groot.hexagonal.adapter.out.persistence.config
+package groot.hexagonal.adapter.output.persistence.config
 
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager

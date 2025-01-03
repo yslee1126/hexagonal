@@ -1,6 +1,6 @@
 package groot.hexagonal.application.service
 
-import groot.hexagonal.application.port.out.MemberQueryPort
+import groot.hexagonal.application.port.output.MemberQueryPort
 import groot.hexagonal.domain.Member
 import org.junit.jupiter.api.Test
 
@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 
-@SpringBootTest
-class MemberServiceJunitTest {
+@SpringBootTest(properties = ["grpc.server.port=0"])
+class MemberGrpcServiceJunitTest {
 
     @MockitoBean
     private lateinit var memberQueryPort: MemberQueryPort

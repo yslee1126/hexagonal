@@ -15,3 +15,7 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     org.hibernate.orm.jdbc.bind: trace
     com.querydsl: debug
+
+grpc:
+  server:
+    port: 9090

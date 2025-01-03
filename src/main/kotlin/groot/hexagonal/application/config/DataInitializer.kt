@@ -1,6 +1,6 @@
-package groot.hexagonal.config
+package groot.hexagonal.application.config
 
-import groot.hexagonal.application.port.`in`.MemberUseCase
+import groot.hexagonal.application.port.input.MemberUseCase
 import groot.hexagonal.domain.Member
 import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner

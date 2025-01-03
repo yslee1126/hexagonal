@@ -1,7 +1,7 @@
-package groot.hexagonal.adapter.out.persistence
+package groot.hexagonal.adapter.output.persistence
 
 import com.querydsl.jpa.impl.JPAQueryFactory
-import groot.hexagonal.adapter.out.persistence.config.QueryDslConfig
+import groot.hexagonal.adapter.output.persistence.config.QueryDslConfig
 import jakarta.persistence.EntityManager
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test

@@ -1,13 +1,12 @@
 package groot.hexagonal.application.service
 
-import groot.hexagonal.application.port.out.MemberQueryPort
+import groot.hexagonal.application.port.output.MemberQueryPort
 import groot.hexagonal.domain.Member
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import org.springframework.boot.test.context.SpringBootTest
 
 class MemberServiceTest: BehaviorSpec ({
 

@@ -1,7 +1,7 @@
 package groot.hexagonal.application.service
 
-import groot.hexagonal.application.port.`in`.MemberUseCase
-import groot.hexagonal.application.port.out.MemberQueryPort
+import groot.hexagonal.application.port.input.MemberUseCase
+import groot.hexagonal.application.port.output.MemberQueryPort
 import groot.hexagonal.domain.Member
 import org.springframework.stereotype.Service
 

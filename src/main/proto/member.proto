@@ -1,0 +1,30 @@
+// proto 파일위치 src/main/proto 말고 변경가능한지
+// 공통 모듈로 분리 필요
+
+syntax = "proto3"; // 프로토콜 버전 3을 사용
+
+option java_multiple_files = true; // 각 메시지를 별도의 파일로 생성
+option java_package = "groot.hexagonal.adapter.input.grpc"; // 생성된 Java 파일의 패키지 이름을 지정
+option java_outer_classname = "MemberProto"; // 생성된 Java 파일의 외부 클래스 이름을 지정
+
+package groot.hexagonal.adapter.input.grpc;
+
+service MemberService { // gRPC 서비스 정의
+  rpc getMembers (MemberRequest) returns (MemberResponse);
+}
+
+message MemberRequest {
+  optional string name = 1; // 검색할 이름 (옵션)
+  int32 size = 2;  // 페이지 당 항목 수
+  int32 page = 3;  // 페이지 번호
+}
+
+message Member {
+  int64 id = 1;    // 멤버 ID
+  string name = 2;  // 멤버 이름
+  optional string email = 3; // 멤버 이메일
+}
+
+message MemberResponse {
+  repeated Member members = 1; // 멤버 리스트
+}

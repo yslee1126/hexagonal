@@ -1,10 +1,9 @@
-package groot.hexagonal.adapter.`in`.web
+package groot.hexagonal.adapter.input.web
 
-import groot.hexagonal.application.port.`in`.MemberUseCase
+import groot.hexagonal.application.port.input.MemberUseCase
 import groot.hexagonal.domain.Member
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.mockito.BDDMockito.given
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

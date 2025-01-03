@@ -11,6 +11,9 @@ plugins {
 
     // querydsl
     id 'org.jetbrains.kotlin.kapt' version '1.9.25'
+
+    // grpc
+    id 'com.google.protobuf' version "0.9.4"
 }
 
 group = 'groot'
@@ -24,6 +27,12 @@ java {
 
 repositories {
     mavenCentral()
+}
+
+ext {
+    grpcProtoVersion = '1.54.0'
+    grpcKotlinVersion = '1.3.0'
+    grpcProtoKotlinVersion = '3.21.12'
 }
 
 dependencies {
@@ -50,10 +59,19 @@ dependencies {
     testImplementation 'io.kotest:kotest-runner-junit5:5.9.1'
     testImplementation 'io.kotest:kotest-assertions-core:5.9.1'
     testImplementation 'io.mockk:mockk:1.13.14'
+
+    // grpc
+    implementation "io.grpc:grpc-protobuf:${grpcProtoVersion}"
+    implementation "io.grpc:grpc-kotlin-stub:${grpcKotlinVersion}"
+    implementation "com.google.protobuf:protobuf-kotlin:${grpcProtoKotlinVersion}"
+
+    // grpc spring boot
+    implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
 }
 
 kotlin {
     compilerOptions {
+        // null 안정성 경고 어노테이션 strict 하게 적용
         freeCompilerArgs.addAll '-Xjsr305=strict'
     }
 }
@@ -67,4 +85,47 @@ allOpen {
     annotation("jakarta.persistence.Entity")
     annotation("jakarta.persistence.Embeddable")
     annotation("jakarta.persistence.MappedSuperclass")
+}
+
+// gRPC source 경로
+sourceSets {
+    main {
+        java {
+            srcDirs(
+                    'build/generated/source/proto/main/java',
+                    'build/generated/source/proto/main/kotlin'
+            )
+        }
+    }
+}
+
+// grpc
+protobuf {
+    // protoc 컴파일러 설정
+    protoc {
+        artifact = "com.google.protobuf:protoc:${grpcProtoKotlinVersion}"
+    }
+
+    // gRPC 플러그인 설정, 코틀린용 코드 생성기
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${grpcProtoVersion}"
+        }
+        grpckt {
+            artifact = "io.grpc:protoc-gen-grpc-kotlin:${grpcKotlinVersion}:jdk8@jar"
+        }
+    }
+
+    // proto 파일 생성 태스크 설정
+    generateProtoTasks {
+        // 프로젝트의 모든 all() proto 파일에 대해 Java/Kotlin gRPC 코드 생성
+        all()*.plugins {
+            grpc {}
+            //grpckt {} // 코루틴 기반 코드 생성
+        }
+        // Kotlin 언어로  Protobuf 메시지 클래스 생성
+        all()*.builtins {
+            kotlin {}
+        }
+    }
 }

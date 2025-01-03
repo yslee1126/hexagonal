@@ -1,4 +1,4 @@
-package groot.hexagonal.adapter.out.persistence
+package groot.hexagonal.adapter.output.persistence
 
 data class MemberDto (val id: Long? = null,
                       val name: String,) {

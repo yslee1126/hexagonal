@@ -1,10 +1,8 @@
-package groot.hexagonal.adapter.out.persistence
+package groot.hexagonal.adapter.output.persistence
 
-import groot.hexagonal.config.DataInitializer
 import groot.hexagonal.domain.Member
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
 import org.mockito.ArgumentMatchers.any
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito.verify
@@ -12,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 
-@SpringBootTest
+@SpringBootTest(properties = ["grpc.server.port=0"])
 class MemberJpaAdapterTest {
 
     //unit 테스트를 위해
