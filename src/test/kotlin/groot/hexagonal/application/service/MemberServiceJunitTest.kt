@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 
 @SpringBootTest(properties = ["grpc.server.port=0"])
-class MemberGrpcServiceJunitTest {
+class MemberServiceJunitTest {
 
     @MockitoBean
     private lateinit var memberQueryPort: MemberQueryPort
