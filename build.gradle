@@ -67,6 +67,14 @@ dependencies {
 
     // grpc spring boot
     implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+
+    // WebFlux => 리액티스 스트림 기반 비동기 동작, I/O 작업이 극단적으로 많은 경우 유리
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    // 코루틴 => 경량화된 스레드, 낮은 컨텍스트 스위칭, 간결한 코드, CPU 작업이 많은 경우 유리
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.3'
+
 }
 
 kotlin {
