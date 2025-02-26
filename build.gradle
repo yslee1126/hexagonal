@@ -14,6 +14,12 @@ plugins {
 
     // grpc
     id 'com.google.protobuf' version "0.9.4"
+
+    // kover
+    id 'org.jetbrains.kotlinx.kover' version '0.9.1'
+
+    // jacoco
+    id 'jacoco'
 }
 
 group = 'groot'
@@ -86,6 +92,14 @@ kotlin {
 
 tasks.named('test') {
     useJUnitPlatform()
+
+    // 테스트 수행 결과가 있어야 jacocoTestReport, jacocoTestCoverageVerification 실행 가능
+    finalizedBy jacocoTestReport
+    finalizedBy jacocoTestCoverageVerification
+
+    // koverHtmlReport, koverVerify 실행하여 결과 확인
+    finalizedBy koverHtmlReport
+    finalizedBy koverVerify
 }
 
 // kotlin class 는 기본 final 이기 때문에 상속, 지연로딩 등 스프링에서 필요한 기능이 제한되어 open 필요
@@ -134,6 +148,74 @@ protobuf {
         // Kotlin 언어로  Protobuf 메시지 클래스 생성
         all()*.builtins {
             kotlin {}
+        }
+    }
+}
+
+//https://kotlin.github.io/kotlinx-kover/gradle-plugin/
+//koverHtmlReport, koverVerify 실행하여 결과 확인
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(10)
+            }
+        }
+        filters {
+            includes {
+                classes("groot.hexagonal.application.service.*", "groot.hexagonal.adapter.*")
+            }
+        }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+// 필터 선언
+def jacocoFileFilter = {
+    fileTree(dir: it,
+            includes: ['groot/hexagonal/application/service/**'], // 특정 패키지만 포함
+            excludes: [
+                    '**/config/**',
+                    '**/dto/**'
+            ]
+    )
+}
+
+// 테스트 커버리지 리포트 설정
+jacocoTestReport {
+    reports {
+        xml.required = true
+        csv.required = false
+        html.required = true
+        // build/jacocoHtml 에 리포트 생성
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+
+    // 필터 적용
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect(jacocoFileFilter)))
+    }
+
+}
+
+// 메소드 레벨 커버리지를 verify 위한 설정
+jacocoTestCoverageVerification {
+    // 필터 적용
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect(jacocoFileFilter)))
+    }
+
+    violationRules {
+        rule {
+            // 메소드 단위 커버리지 설정
+            limit {
+                counter = 'METHOD'
+                value = 'COVEREDRATIO'
+                minimum = 0.8 // 80% 커버리지 요구
+            }
         }
     }
 }
